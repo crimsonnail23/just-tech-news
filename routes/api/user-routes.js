@@ -50,6 +50,27 @@ router.post('/', (req,res)=>{
     });
 });
 
+router.post('/login', (req,res)=>{
+    // expects {email, password}
+    User.findOne({
+        where:{
+            email: req.body.email
+        }
+    }).then(dbUserData=>{
+        if(!dbUserData){
+            res.status(400).json({ message: 'no user with that email address'});
+            return;
+        }
+
+        const validPassword = dbUserData.checkPassword(req.body.password);
+        if(!validPassword){
+            res.status(400).json ({ message: 'incorrect password' });
+            return;
+        }
+        res.json({ user: dbUserData, message: 'you are now logged in' })
+    })
+})
+
 // PUT /api/users/1
 router.put('/:id', (req,res)=>{
     //if req.body has exact key/value pairs to match the modle, you can use 'req.body' instead.
