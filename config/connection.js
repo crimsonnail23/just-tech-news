@@ -1,10 +1,10 @@
 // import the sequelize constructor from the library. 
-const sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 
 require('dotenv').config();
 
 // create connection to our database, pass in your mySQL information for username and password.
-const sequelize = new Sequelize('just_tech_news_db', 'username', 'password',{
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD,{
     host: 'localhost',
     dialect: 'mysql',
     port: 3306
