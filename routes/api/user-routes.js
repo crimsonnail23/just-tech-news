@@ -54,6 +54,7 @@ router.post('/', (req,res)=>{
 router.put('/:id', (req,res)=>{
     //if req.body has exact key/value pairs to match the modle, you can use 'req.body' instead.
     User.update(req.body,{
+        individualHooks: true,
         where:{
             id: req.params.id
         }
