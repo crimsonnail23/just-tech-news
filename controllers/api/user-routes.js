@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const withAuth = require('../../utils/auth');
 const { User, Post, Vote, Comment } = require('../../models');
 
 //GET /api/users
@@ -56,7 +57,7 @@ router.get('/:id', (req,res)=>{
 });
 
 //POST /api/users
-router.post('/', (req,res)=>{
+router.post('/', withAuth, (req,res)=>{
     // expects uesername: learnatine, email: learnatine@email.com, password: password.
     User.create({
         username: req.body.username,
@@ -115,7 +116,7 @@ router.post('/logout',(req,res)=>{
 });
 
 // PUT /api/users/1
-router.put('/:id', (req,res)=>{
+router.put('/:id', withAuth, (req,res)=>{
     //if req.body has exact key/value pairs to match the modle, you can use 'req.body' instead.
     User.update(req.body,{
         individualHooks: true,
@@ -137,7 +138,7 @@ router.put('/:id', (req,res)=>{
 });
 
 // DELETE /api/users/1
-router.delete('/:id', (req,res)=>{
+router.delete('/:id', withAuth, (req,res)=>{
     
         User.destroy({
             where: {
